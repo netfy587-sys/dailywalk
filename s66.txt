@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Long Pour — notes on making coffee slowly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Work+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f7f1e6;
+    --panel:#ecdfc7;
+    --ink:#2b1e14;
+    --ink-soft:#6b5847;
+    --copper:#a6633b;
+    --copper-deep:#7c4526;
+    --umber:#4a3221;
+    --rule:#dcccac;
+  }
+
+  *{ box-sizing:border-box; }
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', -apple-system, sans-serif;
+    font-size:1.05rem;
+    line-height:1.72;
+    font-weight:400;
+  }
+
+  ::selection{ background:#e3cba4; color:var(--umber); }
+  a{ color:var(--copper-deep); }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--copper); outline-offset:3px; }
+
+  .disp{
+    font-family:'Libre Caslon Display', Georgia, serif;
+    font-weight:400;
+    color:var(--ink);
+    letter-spacing:-0.005em;
+  }
+
+  .shell{ max-width:700px; margin:0 auto; padding:0 28px; }
+  .shell-wide{ max-width:980px; margin:0 auto; padding:0 28px; }
+
+  header.masthead{ border-bottom:1px solid var(--rule); padding:20px 0; }
+  header.masthead .row{
+    max-width:980px; margin:0 auto; padding:0 28px;
+    display:flex; justify-content:space-between; align-items:baseline;
+  }
+  header.masthead .wordmark{ font-family:'Libre Caslon Display', serif; font-size:1.1rem; }
+  header.masthead .meta{ font-size:0.82rem; color:var(--ink-soft); }
+
+  /* ---- hero ---- */
+  .hero{ padding:60px 0 10px; }
+  .hero .kicker{
+    font-size:0.85rem; color:var(--copper-deep); font-weight:600;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 5vw, 3.15rem);
+    line-height:1.14;
+    margin:0 0 22px;
+    max-width:16ch;
+  }
+  .hero .dek{ font-size:1.15rem; color:var(--ink-soft); max-width:56ch; margin:0 0 8px; }
+
+  /* ---- hero illustration, full width band ---- */
+  .hero-band{ margin:42px 0 0; }
+  .hero-band svg{ display:block; width:100%; height:auto; }
+
+  /* ---- essay ---- */
+  article{ padding-top:44px; }
+  p{ margin:0 0 20px; color:var(--ink); }
+  h2.disp{ font-size:1.7rem; margin:56px 0 18px; line-height:1.22; }
+  h3{ font-family:'Libre Caslon Display', serif; font-weight:400; font-size:1.15rem; margin:0 0 5px; }
+
+  blockquote{
+    margin:38px 0;
+    padding:24px 28px;
+    background:var(--panel);
+    font-family:'Libre Caslon Display', serif;
+    font-size:1.3rem;
+    line-height:1.4;
+    color:var(--umber);
+  }
+
+  /* ---- timeline (genuinely chronological) ---- */
+  .timeline{ margin:26px 0 10px; padding:0; list-style:none; border-left:1.5px solid var(--rule); }
+  .timeline li{ position:relative; padding:2px 0 26px 26px; }
+  .timeline li::before{
+    content:""; position:absolute; left:-5.5px; top:6px;
+    width:9px; height:9px; border-radius:50%; background:var(--copper);
+  }
+  .timeline .yr{ font-family:'Libre Caslon Display', serif; color:var(--copper-deep); font-size:1.05rem; display:block; margin-bottom:2px; }
+  .timeline p{ margin:0; font-size:0.97rem; color:var(--ink-soft); }
+
+  /* ---- pour schedule table-ish ---- */
+  .pour-schedule{ margin:26px 0 10px; border-top:1px solid var(--rule); }
+  .pour-row{
+    display:grid; grid-template-columns:90px 1fr;
+    gap:18px; padding:15px 0; border-bottom:1px solid var(--rule);
+    align-items:baseline;
+  }
+  .pour-row .time{ font-family:'Libre Caslon Display', serif; color:var(--copper-deep); font-size:1.05rem; }
+  .pour-row p{ margin:0; font-size:0.98rem; }
+
+  ul.plain{ margin:18px 0 8px; padding-left:0; list-style:none; }
+  ul.plain li{ padding:12px 0; border-top:1px solid var(--rule); display:flex; gap:14px; }
+  ul.plain li:last-child{ border-bottom:1px solid var(--rule); }
+  ul.plain li .mark{ font-family:'Libre Caslon Display', serif; color:var(--copper); flex:0 0 auto; }
+
+  /* ---- side-by-side note with illustration ---- */
+  .duo{ display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:center; margin:48px 0; }
+  .duo svg{ display:block; width:100%; height:auto; }
+  .duo .cap{ font-size:0.85rem; color:var(--ink-soft); margin-top:8px; }
+
+  /* ---- closing ---- */
+  .closing{ background:var(--umber); color:#f3e9d8; margin-top:70px; padding:56px 0; }
+  .closing .shell{ display:grid; grid-template-columns:1fr 220px; gap:40px; align-items:center; }
+  .closing h2{ font-family:'Libre Caslon Display', serif; font-size:1.9rem; margin:0 0 18px; color:#f7f1e6; }
+  .closing p{ color:#dccdb2; margin:0 0 14px; }
+  .closing svg{ display:block; width:100%; height:auto; }
+
+  footer{ padding:26px 0 60px; }
+  footer .row{ max-width:980px; margin:0 auto; padding:0 28px; }
+  footer p{ font-size:0.84rem; color:var(--ink-soft); max-width:60ch; margin:0; }
+  footer .sig{ font-family:'Libre Caslon Display', serif; color:var(--ink); margin-bottom:8px; font-size:0.95rem; }
+
+  @keyframes settle{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+  .hero{ animation:settle 0.6s ease-out; }
+
+  @media (max-width:760px){
+    .duo{ grid-template-columns:1fr; }
+    .closing .shell{ grid-template-columns:1fr; }
+    .closing svg{ max-width:220px; margin:0 auto; }
+  }
+  @media (max-width:520px){
+    body{ font-size:1rem; }
+    .shell, .shell-wide{ padding:0 20px; }
+    header.masthead .row{ padding:0 20px; flex-direction:column; align-items:flex-start; gap:4px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="row">
+    <span class="wordmark">The Long Pour</span>
+    <span class="meta">notes on making coffee slowly, at home</span>
+  </div>
+</header>
+
+<div class="shell">
+  <div class="hero">
+    <span class="kicker">on brewing</span>
+    <h1 class="disp">Four minutes is longer than it sounds</h1>
+    <p class="dek">A kettle, a filter, and roughly the time it takes water to fall through a bed of ground coffee — that's the entire method. It has survived a century of faster alternatives for reasons that have very little to do with speed.</p>
+  </div>
+</div>
+
+<div class="shell-wide hero-band">
+  <svg viewBox="0 0 1000 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a gooseneck kettle pouring water over a coffee dripper set on a mug">
+    <rect x="0" y="0" width="1000" height="380" fill="#ecdfc7"/>
+    <line x1="60" y1="318" x2="940" y2="318" stroke="#dcccac" stroke-width="2"/>
+    <ellipse cx="500" cy="320" rx="90" ry="10" fill="#dcccac"/>
+
+    <!-- mug -->
+    <path d="M448 250 L456 300 C456 310 474 317 500 317 C526 317 544 310 544 300 L552 250 Z" fill="#f7f1e6" stroke="#2b1e14" stroke-width="3"/>
+    <path d="M552 262 C580 260 588 284 568 292 C560 295 552 293 548 289" fill="none" stroke="#2b1e14" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- dripper (v60 style cone), sitting on the mug rim -->
+    <path d="M420 168 L580 168 L528 248 L472 248 Z" fill="#f7f1e6" stroke="#2b1e14" stroke-width="3"/>
+    <path d="M448 250 C448 244 452 242 456 250" fill="none" stroke="#2b1e14" stroke-width="2"/>
+    <ellipse cx="500" cy="188" rx="72" ry="13" fill="#4a3221"/>
+    <path d="M436 188 C460 194 540 194 564 188" fill="none" stroke="#3a2818" stroke-width="2" opacity="0.5"/>
+
+    <!-- water stream from spout into the grounds -->
+    <path d="M506 118 C500 138 512 158 502 178" fill="none" stroke="#a6633b" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="503" cy="184" r="3.5" fill="#a6633b"/>
+
+    <!-- gooseneck kettle, tilted, pouring -->
+    <g>
+      <path d="M600 70 C598 48 622 32 656 32 C696 32 722 54 718 82 C715 104 692 118 664 116 C650 115 638 110 630 100" fill="#a6633b" stroke="#2b1e14" stroke-width="3"/>
+      <circle cx="668" cy="40" r="6" fill="#2b1e14"/>
+      <path d="M718 66 C742 60 754 78 738 92 C728 100 714 98 706 90" fill="none" stroke="#2b1e14" stroke-width="3" stroke-linecap="round"/>
+      <path d="M630 100 C580 108 545 108 512 112 C508 112 505 114 506 118" fill="#a6633b" stroke="#2b1e14" stroke-width="3" stroke-linecap="round"/>
+    </g>
+
+    <!-- steam -->
+    <g stroke="#7c4526" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.55">
+      <path d="M470 150 C466 138 476 132 472 120"/>
+      <path d="M530 150 C526 138 536 132 532 120"/>
+    </g>
+
+    <circle cx="130" cy="70" r="30" fill="none" stroke="#a6633b" stroke-width="2.5"/>
+    <path d="M60 55 C300 24, 700 24, 940 55" fill="none" stroke="#a6633b" stroke-width="1.4" stroke-dasharray="1 9" stroke-linecap="round"/>
+  </svg>
+</div>
+
+<div class="shell">
+  <article>
+    <p>There are faster ways to make coffee. A machine will do it in under a minute, no attention required, no risk of getting it wrong. Pour-over asks for the opposite of that: a kettle you have to hold, water poured in slow, deliberate circles, four minutes where the only job is to watch and wait. It is, by most reasonable measures, an inefficient way to make a cup of coffee.</p>
+    <p>And yet it hasn't gone anywhere. Part of the reason is the cup itself — hand-poured coffee tends to taste cleaner, brighter, less muddled than what a machine produces, because you can adjust for the bean in front of you instead of running everything through the same fixed cycle. But a lot of people who do this daily will admit, if you ask, that the taste isn't really what keeps them doing it. It's the four minutes.</p>
+
+    <h2 class="disp">Where the method comes from</h2>
+    <p>The idea is older than most people assume, and the timeline says something about why it stuck around:</p>
+    <ul class="timeline">
+      <li><span class="yr">1908</span><p>Melitta Bentz, a German housewife, punches holes in a brass pot and lines it with blotting paper — the first paper filter, built to keep grounds out of the cup without the bitterness of boiling.</p></li>
+      <li><span class="yr">1950s–60s</span><p>Filter coffee becomes a household staple across Europe and North America, mostly through electric drip machines that automate the pour rather than replace it.</p></li>
+      <li><span class="yr">1990s</span><p>Japanese brewers, particularly at Kono and later Hario, start refining manual pour-over as a precise, repeatable craft rather than a chore — measured water, measured time, a specific kettle shape.</p></li>
+      <li><span class="yr">2000s onward</span><p>Third-wave coffee shops bring manual brewing back to the counter, this time as something to watch being made, not just something to order.</p></li>
+    </ul>
+
+    <blockquote>The machine makes coffee while you do something else. The kettle makes coffee while you do nothing else — and that turns out to be the appeal, not the cost.</blockquote>
+
+    <h2 class="disp">What four minutes actually involves</h2>
+    <p>Every method has its own numbers, but a fairly standard pour looks something like this, start to finish:</p>
+    <div class="pour-schedule">
+      <div class="pour-row"><span class="time">0:00</span><p>Pour just enough hot water to wet all the grounds — roughly twice their weight. Wait. This is the bloom: trapped gas escapes, and the coffee should visibly swell.</p></div>
+      <div class="pour-row"><span class="time">0:45</span><p>Begin the first real pour, working in slow circles from the centre outward, keeping the water level steady rather than flooding it.</p></div>
+      <div class="pour-row"><span class="time">1:30</span><p>Pause briefly, let the level drop a little, then pour again — most methods use two or three staged pours rather than one continuous stream.</p></div>
+      <div class="pour-row"><span class="time">2:45</span><p>Final pour reaches the target water weight. Bed should look roughly flat, not cratered on one side — that's usually a sign of uneven pouring.</p></div>
+      <div class="pour-row"><span class="time">3:30–4:00</span><p>Drawdown finishes as the last water filters through. Total brew time in this range is typical for a light-to-medium roast.</p></div>
+    </div>
+  </article>
+</div>
+
+<div class="shell-wide">
+  <div class="duo">
+    <div>
+      <h2 class="disp" style="margin-top:0;">Where it usually goes wrong</h2>
+      <p>Most disappointing cups trace back to one of three things: a grind that's too fine, which chokes the flow and pulls out too much bitterness; water that's too hot, scorching the grounds rather than dissolving them evenly; or a pour that's too fast, which floods the bed and drains before the flavour has had time to extract properly. None of this needs expensive equipment to fix — mostly it needs one variable changed at a time, and a willingness to make a few bad cups on the way to a good one.</p>
+    </div>
+    <div>
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a coffee dripper with filter paper and grounds">
+        <ellipse cx="150" cy="270" rx="100" ry="12" fill="#dcccac"/>
+        <path d="M90 100 L210 100 L170 240 L130 240 Z" fill="none" stroke="#2b1e14" stroke-width="3"/>
+        <path d="M100 110 L200 110 L166 228 L134 228 Z" fill="#f7f1e6" stroke="#a6633b" stroke-width="2"/>
+        <ellipse cx="150" cy="150" rx="42" ry="10" fill="#4a3221"/>
+        <path d="M150 100 L150 60" stroke="#a6633b" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="150" cy="50" r="6" fill="#a6633b"/>
+      </svg>
+      <p class="cap">A flat, even bed of grounds after drawdown usually means the pour was even too.</p>
+    </div>
+  </div>
+
+  <div class="shell" style="padding:0;">
+    <ul class="plain">
+      <li><span class="mark">·</span><span>Weigh the water and the coffee rather than guessing — consistency depends on it more than any other single habit.</span></li>
+      <li><span class="mark">·</span><span>Grind just before brewing. Pre-ground coffee loses most of its aroma within days.</span></li>
+      <li><span class="mark">·</span><span>Keep the pour slow and centred; resist the urge to fill the dripper quickly.</span></li>
+      <li><span class="mark">·</span><span>Taste before adjusting. A sour cup usually needs a finer grind or more time; a bitter one usually needs the opposite.</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="closing">
+  <div class="shell">
+    <div>
+      <h2>Four minutes, on purpose</h2>
+      <p>Nobody needs pour-over coffee. A machine, or even instant, gets caffeine into a cup with far less effort. What the kettle offers instead is a small, unhurried stretch of time that asks for nothing but attention — which may be the real reason it has outlasted almost every appliance built to replace it.</p>
+      <p>If you're trying it for the first time, don't aim for a perfect cup. Aim for four unhurried minutes. The coffee tends to follow.</p>
+    </div>
+    <svg viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a filled coffee cup with steam">
+      <ellipse cx="110" cy="230" rx="70" ry="10" fill="#3a2818"/>
+      <path d="M60 150 L160 150 L150 210 C150 222 132 230 110 230 C88 230 70 222 70 210 Z" fill="none" stroke="#f3e9d8" stroke-width="3"/>
+      <path d="M160 165 C185 165 190 190 165 195" fill="none" stroke="#f3e9d8" stroke-width="3"/>
+      <path d="M85 130 C82 118 90 112 88 100" stroke="#dccdb2" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.8"/>
+      <path d="M110 130 C107 118 115 112 113 100" stroke="#dccdb2" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.8"/>
+      <path d="M135 130 C132 118 140 112 138 100" stroke="#dccdb2" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.8"/>
+    </svg>
+  </div>
+</div>
+
+<footer>
+  <div class="row">
+    <p class="sig">The Long Pour</p>
+    <p>Times and ratios above are typical starting points, not fixed rules — different beans, grinders, and roasts will all shift them. Treat this as a starting point for your own cups, not a substitute for tasting and adjusting as you go.</p>
+  </div>
+</footer>
+
+</body>
+</html>
